@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stay Bright | Papelería Curada & Bienestar</title>
+    
+    <!-- Fuentes de Google: Poppins para texto, Playfair Display como alternativa a Gladiola para títulos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos Phosphor (Ligeros y estéticos) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* === VARIABLES DE DISEÑO (DESIGN TOKENS) === */
+        :root {
+            /* Paleta de Colores Base */
+            --primary: #E9DBF2;    /* Lila suave */
+            --secondary: #2D2A8C;  /* Azul profundo */
+            --tertiary: #FFF5E8;   /* Crema cálido */
+            --neutral: #141220;    /* Negro/Morado muy oscuro */
+            
+            /* Colores de la Interfaz (Light Mode por defecto) */
+            --bg-color: var(--tertiary);
+            --bg-alt: #ffffff;
+            --text-color: var(--neutral);
+            --text-light: #4A4A5A;
+            --nav-bg: rgba(255, 245, 232, 0.95);
+            
+            /* Bordes y Sombras */
+            --radius-soft: 12px;
+            --radius-btn: 8px;
+            --shadow-soft: 0 8px 24px rgba(20, 18, 32, 0.06);
+            --shadow-hover: 0 12px 32px rgba(20, 18, 32, 0.12);
+            
+            /* Transiciones */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Soporte para Modo Oscuro Automático */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: var(--neutral);
+                --bg-alt: #1F1C33;
+                --text-color: var(--tertiary);
+                --text-light: var(--primary);
+                --nav-bg: rgba(20, 18, 32, 0.95);
+                --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            h1, h2, h3, h4 {
+                color: var(--primary);
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* === COMPONENTES === */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: var(--radius-btn);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--tertiary);
+        }
+
+        .btn-primary:hover {
+            background-color: #1c1a60;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .btn-primary {
+                background-color: var(--primary);
+                color: var(--neutral);
+            }
+            .btn-primary:hover {
+                background-color: #d1c1de;
+            }
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            background-color: #dcd0e8;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* === NAVEGACIÓN === */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo img {
+            height: 40px; /* Ajusta la altura del logo según necesites */
+            width: auto;
+            border-radius: 50%; /* Opcional: hace que el logo cuadrado se vea redondo si encaja con tu marca */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .logo { color: var(--primary); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-links a:hover { color: var(--primary); }
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .nav-icons { color: var(--primary); }
+        }
+
+        /* Menú Hamburguesa (Interactivo) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001; /* Sobre el menú móvil */
+        }
+
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 3px;
+            transition: var(--transition-smooth);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hamburger .bar { background-color: var(--primary); }
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            padding-top: 120px;
+            padding-bottom: 60px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--tertiary) 0%, var(--primary) 100%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hero {
+                background: linear-gradient(135deg, var(--neutral) 0%, #201d36 100%);
+            }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            color: var(--text-light);
+            max-width: 90%;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-soft);
+            box-shadow: var(--shadow-hover);
+            object-fit: cover;
+            aspect-ratio: 4/5;
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            background-color: var(--tertiary);
+            padding: 16px 24px;
+            border-radius: var(--radius-soft);
+            box-shadow: var(--shadow-soft);
+            color: var(--secondary);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hero-badge {
+                background-color: var(--neutral);
+                color: var(--primary);
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+        }
+
+        /* === NOSOTROS / VALOR === */
+        .about {
+            padding: 100px 0;
+            background-color: var(--bg-alt);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .about-card {
+            padding: 40px 24px;
+            background-color: var(--bg-color);
+            border-radius: var(--radius-soft);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background-color: var(--secondary);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .about-icon {
+                color: var(--secondary);
+                background-color: var(--primary);
+            }
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        /* === PRODUCTOS / CATÁLOGO === */
+        .products {
+            padding: 100px 0;
+            background-color: var(--bg-color);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .product-card {
+            background-color: var(--bg-alt);
+            border-radius: var(--radius-soft);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .product-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .product-price { color: var(--primary); }
+            .product-img { color: var(--neutral); }
+        }
+
+        .product-card .btn {
+            margin-top: auto;
+            width: 100%;
+        }
+
+        /* === TESTIMONIOS === */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--primary);
+            color: var(--neutral);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .testimonials {
+                background-color: #2a2538;
+                color: var(--tertiary);
+            }
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 32px;
+            border-radius: var(--radius-soft);
+            backdrop-filter: blur(5px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .testimonial-card {
+                background-color: rgba(20, 18, 32, 0.4);
+            }
+        }
+
+        .stars {
+            color: #FFB020;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        /* === CONTACTO === */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--bg-alt);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            background-color: var(--bg-color);
+            border-radius: var(--radius-soft);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .contact-info {
+            background-color: var(--secondary);
+            color: var(--tertiary);
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-info {
+                background-color: #1a1836;
+            }
+        }
+
+        .contact-info h2 {
+            color: var(--tertiary);
+        }
+
+        .contact-info p {
+            margin-bottom: 24px;
+            opacity: 0.9;
+        }
+
+        .contact-form {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius-btn);
+            font-family: inherit;
+            background-color: var(--bg-alt);
+            color: var(--text-color);
+            transition: var(--transition-smooth);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .form-group input,
+            .form-group textarea {
+                border-color: #333;
+            }
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(45, 42, 140, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background-color: var(--neutral);
+            color: var(--tertiary);
+            padding: 64px 0 24px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand h2 {
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .footer-links h4 {
+            color: var(--tertiary);
+            margin-bottom: 24px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Botón Flotante de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: var(--transition-smooth);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        /* === RESPONSIVE (MEDIA QUERIES) === */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text p {
+                max-width: 100%;
+            }
+            .hero-badge {
+                display: none;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Oculto por defecto */
+                width: 100%;
+                height: 100vh;
+                background-color: var(--bg-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            }
+
+            /* Clase activa añadida vía JavaScript */
+            .nav-links.active {
+                transform: translateX(-100%);
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                font-family: 'Playfair Display', serif;
+                font-weight: 600;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navegación -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg2H9viqi0OFOZMKzHLHkRC4artbqvrm5WKONUSvUQ-raTHRLthyphenhyphenGcr2aF1PYGd1XbTIVbSgd55SQf-HclJ3iAYRLI636ZDkg03hYjKyyeOsEEhZkVmJG3b1C4BhlJi0RIlUcLo9Vz0IYZRZVQ0dUlUZGlMdzjWMe_IKAyRgApCEd2bcBXVZ47NWEb7Vs4A/s736/descarga%20(1).jpg" alt="Logo Stay Bright"> Stay Bright
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#inicio" class="nav-item">Inicio</a></li>
+                <li><a href="#nosotros" class="nav-item">Nosotros</a></li>
+                <li><a href="#productos" class="nav-item">Catálogo</a></li>
+                <li><a href="#contacto" class="nav-item">Contacto</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <i class="ph ph-shopping-bag"></i>
+                <!-- Menú Hamburguesa -->
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección Inicio (Hero) -->
+        <section id="inicio" class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>Transforma la organización en un ritual diario.</h1>
+                    <p>Ofrecemos una experiencia estética y curada que fomenta la conexión personal y el bienestar mental. El diseño como extensión de tu identidad.</p>
+                    <a href="#productos" class="btn btn-primary">Explorar Catálogo</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKeKtyFKnbMl6WcJjuQc1l0ZXuv8w1qp1LcD-aGxcVhtsYPYq05vPh3TQfxqu_wr_DtOTtuu8dPMT28Jzca7spjucIZNduSQQLFKkLHrv3AnGrHDv-X6rJNlmy19Mj-_DGkEa0843VXnWSypXt1mGrvPBs6JcYjYa7a9E5Vhts0-ia1qwdaFhAY8TBj_Jt/s930/WhatsApp%20Image%202026-08-31%20at%207.02.02%20PM.jpeg" alt="Agenda Minimalista en escritorio" style="width: 100%; height: 500px; object-fit: cover; border-radius: var(--radius-soft); box-shadow: var(--shadow-hover);">
+                    <div class="hero-badge">✨ Colección 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Nosotros (Valor Diferenciador) -->
+        <section id="nosotros" class="about">
+            <div class="container">
+                <h2 class="section-title">Más que papelería, bienestar.</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-icon"><i class="ph ph-flower-lotus"></i></div>
+                        <h3>Diseño Curado</h3>
+                        <p>Cada pieza está pensada para ser estéticamente placentera y funcional, eliminando el ruido visual.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon"><i class="ph ph-brain"></i></div>
+                        <h3>Bienestar Mental</h3>
+                        <p>Fomentamos el "journaling" y la organización como herramientas para la claridad mental diaria.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon"><i class="ph ph-fingerprint"></i></div>
+                        <h3>Tu Identidad</h3>
+                        <p>Creemos que tus herramientas de trabajo y estudio deben reflejar quién eres y qué valoras.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Productos -->
+        <section id="productos" class="products">
+            <div class="container">
+                <h2 class="section-title">Nuestros Destacados</h2>
+                <div class="products-grid">
+                    <!-- Producto 1 -->
+                    <div class="product-card">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiDUFap-PCW7_93fKYHuKSlEIuxUkXIceUgxfyinyfgzXV6cXBIGbTf7ZHK2LRavugcWwdIH0okSf0EQDJReFmUhhv39vgq4cjkznawtzRa4RqPPAG1zQmO5EwF2hS3XJ4li6MdNH4jasU7FnNGRd5qMCo08yRasnzlIF0j0Xirix0DYO85fIO-T0ECBYc/s736/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM.jpeg" alt="Planner Diario" class="product-img" style="padding: 0; background-color: transparent; object-fit: cover;">
+                        <div class="product-info">
+                            <h3 class="product-title">Planner Diario "Mindful"</h3>
+                            <p class="product-price">S/ 85.00</p>
+                            <button class="btn btn-primary">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                    <!-- Producto 2 -->
+                    <div class="product-card">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1NbB4VaNDNqJfZTPut_7XJCVNcXsDLk8kTZPPqXOAOzeQy-kjXQJX7O2XlcHAVBbWGz5tYCFxHu8sm6dn5T66xJ9Fq3KrBRe_2jBfuYRw7PshVR2o_79z0HZwNGts4Zed4n06dFO8pUxpuA56mPI05TijqMEGIwiMblPyXThV6NsdoGPirDbE3TYwAmpJ/s1001/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM%20(1).jpeg" alt="Set de Cuadernos" class="product-img" style="padding: 0; background-color: transparent; object-fit: cover;">
+                        <div class="product-info">
+                            <h3 class="product-title">Set de Cuadernos "Esencia"</h3>
+                            <p class="product-price">S/ 60.00</p>
+                            <button class="btn btn-primary">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                    <!-- Producto 3 -->
+                    <div class="product-card">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfNfberQQ7YBHtRWEVf292z8oyAjVPRs90mKB3P3zuvpaOCOfYILVUgmFbssjjEr1tyh6sIJgteQSKw26NM4kkxeuv2Gq2vZUSYmIKrOTbBQBjfLY7TNnMswEpmaiPcc-I6q9LePDpPuseLkWErgpJlthLmQG8LHlrdIselIr3uGrb1tfLjo0Ai9FxUeLN/s736/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM%20(2).jpeg" alt="Set de Bolígrafos Pasteles" class="product-img" style="padding: 0; background-color: transparent; object-fit: cover;">
+                        <div class="product-info">
+                            <h3 class="product-title">Set de Bolígrafos Pasteles</h3>
+                            <p class="product-price">S/ 45.00</p>
+                            <button class="btn btn-primary">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                    <!-- Producto 4 -->
+                    <div class="product-card">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivFfNppRu21Yu1JnYHVsxxrEvc1gmHXxf3QfFxlKMDzJPNsjB9kZMg16jxUJkHOUczC1QNFEmldeMcq3aFVtaakdGbKlVyGoRHREDN5E4r6EvGyszSPdvyaBwHGgCwLOLeueU7FmDfpCY8bv5a7jSxdY9ToJPZ7a6sUUYtoqHSrOg2BVxNPWFjxK-dwHFE/s1104/WhatsApp%20Image%202026-08-31%20at%206.59.59%20PM.jpeg" alt="Organizadores de Acrílico" class="product-img" style="padding: 0; background-color: transparent; object-fit: cover;">
+                        <div class="product-info">
+                            <h3 class="product-title">Organizadores de Acrílico</h3>
+                            <p class="product-price">S/ 60.00</p>
+                            <button class="btn btn-primary">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Testimonios -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title" style="color: inherit;">Lo que dicen de nosotros</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Desde que uso el planner de Stay Bright, organizarme dejó de ser una obligación para convertirse en mi momento favorito de la mañana. ¡El diseño es hermoso!"</p>
+                        <p class="testimonial-author">- Luciana V.</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"La calidad del papel y la estética minimalista me ayudan a mantener la concentración. Exactamente lo que buscaba para mi oficina."</p>
+                        <p class="testimonial-author">- Carlos M.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="contact">
+            <div class="container">
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h2>Conecta con nosotros</h2>
+                        <p>¿Tienes dudas sobre nuestros productos o necesitas asistencia con tu pedido? Escríbenos, estaremos felices de ayudarte a crear tu espacio ideal.</p>
+                        <p><i class="ph ph-envelope-simple"></i> hola@staybright.com</p>
+                        <p><i class="ph ph-map-pin"></i> Lima, Perú</p>
+                    </div>
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado. (Simulación)');">
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" placeholder="tu@correo.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>Stay Bright</h2>
+                    <p style="max-width: 300px; opacity: 0.8;">Transformando la organización en un ritual diario a través del diseño.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#nosotros">Nuestra Historia</a></li>
+                        <li><a href="#productos">Catálogo</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal & Soporte</h4>
+                    <ul>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Políticas de Envío</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stay Bright E-commerce. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón WhatsApp -->
+    <a href="https://wa.me/123456789" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="ph ph-whatsapp-logo"></i>
+    </a>
+
+    <!-- Lógica de Interacción (JavaScript) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            // 1. Interacción del Menú Hamburguesa (Fluido y Suave)
+            hamburger.addEventListener('click', () => {
+                // Alterna la clase 'active' que transforma el icono en 'X' y muestra el menú
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                // Evitar el scroll en el body cuando el menú móvil está abierto
+                if(navLinks.classList.contains('active')){
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // 2. Cerrar menú móvil al hacer clic en un enlace
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+
+            // Animación CSS para transformar la hamburguesa en una "X"
+            // Se inyecta dinámicamente o puede estar en el bloque style arriba.
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .hamburger.active .bar:nth-child(1) {
+                    transform: translateY(8px) rotate(45deg);
+                }
+                .hamburger.active .bar:nth-child(2) {
+                    opacity: 0;
+                }
+                .hamburger.active .bar:nth-child(3) {
+                    transform: translateY(-8px) rotate(-45deg);
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
