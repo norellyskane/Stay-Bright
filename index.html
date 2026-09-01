@@ -181,9 +181,9 @@
         }
         
         .logo img {
-            height: 40px; /* Ajusta la altura del logo según necesites */
+            height: 40px; 
             width: auto;
-            border-radius: 50%; /* Opcional: hace que el logo cuadrado se vea redondo si encaja con tu marca */
+            border-radius: 50%; 
         }
 
         @media (prefers-color-scheme: dark) {
@@ -217,11 +217,251 @@
             align-items: center;
             font-size: 1.5rem;
             color: var(--secondary);
-            cursor: pointer;
         }
         
         @media (prefers-color-scheme: dark) {
             .nav-icons { color: var(--primary); }
+        }
+
+        /* === CARRITO DE COMPRAS ESTILOS NUEVOS === */
+        .cart-icon-wrapper {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: #e11d48; /* Rojo brillante para destacar */
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Overlay oscuro */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1005;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Menú lateral del carrito */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: var(--bg-alt);
+            z-index: 1010;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cart-header { border-bottom-color: rgba(255,255,255,0.05); }
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close-cart {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .close-cart:hover {
+            color: #e11d48;
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Items del Carrito */
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cart-item { border-bottom-color: rgba(255,255,255,0.05); }
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: var(--radius-btn);
+            background-color: var(--bg-color);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cart-item-price { color: var(--primary); }
+        }
+
+        .cart-qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-color);
+            width: max-content;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .cart-qty-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-remove {
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            color: #e11d48;
+        }
+
+        .cart-footer {
+            padding: 24px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            background-color: var(--bg-alt);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cart-footer { border-top-color: rgba(255,255,255,0.05); }
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+        }
+
+        /* Notificación Toast */
+        .toast-notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary);
+            color: var(--tertiary);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .toast-notification {
+                background-color: var(--primary);
+                color: var(--neutral);
+            }
+        }
+
+        .toast-notification.show {
+            bottom: 40px;
         }
 
         /* Menú Hamburguesa (Interactivo) */
@@ -230,7 +470,7 @@
             cursor: pointer;
             flex-direction: column;
             gap: 5px;
-            z-index: 1001; /* Sobre el menú móvil */
+            z-index: 1001;
         }
 
         .hamburger .bar {
@@ -578,6 +818,120 @@
             min-height: 120px;
         }
 
+        .contact-form-wrapper {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--bg-alt);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: var(--radius-btn);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .alert svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            color: #15803d;
+            border-left: 4px solid #22c55e;
+        }
+
+        .alert-error {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border-left: 4px solid #ef4444;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary);
+            color: var(--secondary);
+            border-radius: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .social-btn:hover {
+            background-color: var(--tertiary);
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .social-btn svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-form-wrapper { background-color: var(--bg-alt); }
+            .alert-success { background-color: rgba(34, 197, 94, 0.1); color: #4ade80; }
+            .alert-error { background-color: rgba(239, 68, 68, 0.1); color: #f87171; }
+            .social-btn { background-color: var(--primary); color: var(--neutral); }
+            .social-btn:hover { background-color: #dcd0e8; }
+        }
+
         /* === FOOTER === */
         footer {
             background-color: var(--neutral);
@@ -682,7 +1036,7 @@
             .nav-links {
                 position: fixed;
                 top: 0;
-                right: -100%; /* Oculto por defecto */
+                right: -100%; 
                 width: 100%;
                 height: 100vh;
                 background-color: var(--bg-color);
@@ -694,7 +1048,6 @@
                 box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             }
 
-            /* Clase activa añadida vía JavaScript */
             .nav-links.active {
                 transform: translateX(-100%);
             }
@@ -711,6 +1064,10 @@
             
             .section-title {
                 font-size: 2rem;
+            }
+            
+            .cart-sidebar {
+                max-width: 100%; /* Ocupa todo el ancho en móviles */
             }
         }
     </style>
@@ -732,7 +1089,11 @@
             </ul>
 
             <div class="nav-icons">
-                <i class="ph ph-shopping-bag"></i>
+                <!-- Icono de Bolsa actualizado para el Carrito -->
+                <div class="cart-icon-wrapper" id="openCartBtn">
+                    <i class="ph ph-shopping-bag"></i>
+                    <span class="cart-badge" id="cartBadgeCount">0</span>
+                </div>
                 <!-- Menú Hamburguesa -->
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -784,6 +1145,7 @@
         </section>
 
         <!-- Sección Productos -->
+        <!-- NOTA: Se agregaron atributos "data-*" a los botones para ser leídos por JS -->
         <section id="productos" class="products">
             <div class="container">
                 <h2 class="section-title">Nuestros Destacados</h2>
@@ -794,7 +1156,13 @@
                         <div class="product-info">
                             <h3 class="product-title">Planner Diario "Mindful"</h3>
                             <p class="product-price">S/ 85.00</p>
-                            <button class="btn btn-primary">Añadir al Carrito</button>
+                            <button class="btn btn-primary add-to-cart-btn" 
+                                    data-id="1" 
+                                    data-name='Planner Diario "Mindful"' 
+                                    data-price="85.00" 
+                                    data-img="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiDUFap-PCW7_93fKYHuKSlEIuxUkXIceUgxfyinyfgzXV6cXBIGbTf7ZHK2LRavugcWwdIH0okSf0EQDJReFmUhhv39vgq4cjkznawtzRa4RqPPAG1zQmO5EwF2hS3XJ4li6MdNH4jasU7FnNGRd5qMCo08yRasnzlIF0j0Xirix0DYO85fIO-T0ECBYc/s736/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM.jpeg">
+                                Añadir al Carrito
+                            </button>
                         </div>
                     </div>
                     <!-- Producto 2 -->
@@ -803,7 +1171,13 @@
                         <div class="product-info">
                             <h3 class="product-title">Set de Cuadernos "Esencia"</h3>
                             <p class="product-price">S/ 60.00</p>
-                            <button class="btn btn-primary">Añadir al Carrito</button>
+                            <button class="btn btn-primary add-to-cart-btn"
+                                    data-id="2" 
+                                    data-name='Set de Cuadernos "Esencia"' 
+                                    data-price="60.00" 
+                                    data-img="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1NbB4VaNDNqJfZTPut_7XJCVNcXsDLk8kTZPPqXOAOzeQy-kjXQJX7O2XlcHAVBbWGz5tYCFxHu8sm6dn5T66xJ9Fq3KrBRe_2jBfuYRw7PshVR2o_79z0HZwNGts4Zed4n06dFO8pUxpuA56mPI05TijqMEGIwiMblPyXThV6NsdoGPirDbE3TYwAmpJ/s1001/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM%20(1).jpeg">
+                                Añadir al Carrito
+                            </button>
                         </div>
                     </div>
                     <!-- Producto 3 -->
@@ -812,7 +1186,13 @@
                         <div class="product-info">
                             <h3 class="product-title">Set de Bolígrafos Pasteles</h3>
                             <p class="product-price">S/ 45.00</p>
-                            <button class="btn btn-primary">Añadir al Carrito</button>
+                            <button class="btn btn-primary add-to-cart-btn"
+                                    data-id="3" 
+                                    data-name="Set de Bolígrafos Pasteles" 
+                                    data-price="45.00" 
+                                    data-img="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfNfberQQ7YBHtRWEVf292z8oyAjVPRs90mKB3P3zuvpaOCOfYILVUgmFbssjjEr1tyh6sIJgteQSKw26NM4kkxeuv2Gq2vZUSYmIKrOTbBQBjfLY7TNnMswEpmaiPcc-I6q9LePDpPuseLkWErgpJlthLmQG8LHlrdIselIr3uGrb1tfLjo0Ai9FxUeLN/s736/WhatsApp%20Image%202026-08-31%20at%206.58.41%20PM%20(2).jpeg">
+                                Añadir al Carrito
+                            </button>
                         </div>
                     </div>
                     <!-- Producto 4 -->
@@ -821,7 +1201,13 @@
                         <div class="product-info">
                             <h3 class="product-title">Organizadores de Acrílico</h3>
                             <p class="product-price">S/ 60.00</p>
-                            <button class="btn btn-primary">Añadir al Carrito</button>
+                            <button class="btn btn-primary add-to-cart-btn"
+                                    data-id="4" 
+                                    data-name="Organizadores de Acrílico" 
+                                    data-price="60.00" 
+                                    data-img="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivFfNppRu21Yu1JnYHVsxxrEvc1gmHXxf3QfFxlKMDzJPNsjB9kZMg16jxUJkHOUczC1QNFEmldeMcq3aFVtaakdGbKlVyGoRHREDN5E4r6EvGyszSPdvyaBwHGgCwLOLeueU7FmDfpCY8bv5a7jSxdY9ToJPZ7a6sUUYtoqHSrOg2BVxNPWFjxK-dwHFE/s1104/WhatsApp%20Image%202026-08-31%20at%206.59.59%20PM.jpeg">
+                                Añadir al Carrito
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -852,26 +1238,71 @@
             <div class="container">
                 <div class="contact-container">
                     <div class="contact-info">
-                        <h2>Conecta con nosotros</h2>
-                        <p>¿Tienes dudas sobre nuestros productos o necesitas asistencia con tu pedido? Escríbenos, estaremos felices de ayudarte a crear tu espacio ideal.</p>
-                        <p><i class="ph ph-envelope-simple"></i> hola@staybright.com</p>
-                        <p><i class="ph ph-map-pin"></i> Lima, Perú</p>
+                        <h2>Contáctanos</h2>
+                        <p>Estamos aquí para ayudarte. Déjanos tu mensaje y nos pondremos en contacto contigo lo antes posible.</p>
+                        
+                        <div class="social-links">
+                            <!-- Enlace Instagram -->
+                            <a href="https://www.instagram.com/staybright_shop?igsi=d3Q3eTkxdG5oNm82" target="_blank" rel="noopener noreferrer" class="social-btn">
+                                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            
+                            <!-- Enlace WhatsApp -->
+                            <a href="https://wa.me/51954978785" target="_blank" rel="noopener noreferrer" class="social-btn">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado. (Simulación)');">
-                        <div class="form-group">
-                            <label for="name">Nombre completo</label>
-                            <input type="text" id="name" placeholder="Tu nombre" required>
+                    
+                    <div class="contact-form-wrapper">
+                        <!-- Mensaje de éxito (Oculto por defecto) -->
+                        <div id="successMessage" class="alert alert-success hidden">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span>¡Mensaje enviado con éxito! Nos comunicaremos contigo pronto.</span>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Correo electrónico</label>
-                            <input type="email" id="email" placeholder="tu@correo.com" required>
+                        
+                        <!-- Mensaje de error (Oculto por defecto) -->
+                        <div id="errorMessage" class="alert alert-error hidden">
+                            <span>Ocurrió un error al enviar el mensaje. Inténtalo de nuevo.</span>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Mensaje</label>
-                            <textarea id="message" placeholder="¿En qué podemos ayudarte?" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-                    </form>
+
+                        <form id="contactForm" class="contact-form" style="padding: 0;">
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" name="telefono" placeholder="+51 999 999 999" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="correoelectronico">Correo Electrónico</label>
+                                    <input type="email" id="correoelectronico" name="correoelectronico" placeholder="tu@correo.com" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mensaje">Mensaje</label>
+                                <textarea id="mensaje" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn" class="btn btn-primary btn-content">
+                                <span id="btnText">Enviar Mensaje</span>
+                                <svg id="btnSpinner" class="spinner hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -911,24 +1342,55 @@
     </footer>
 
     <!-- Botón WhatsApp -->
-    <a href="https://wa.me/123456789" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <a href="https://wa.me/51954978785" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <i class="ph ph-whatsapp-logo"></i>
     </a>
+
+    <!-- === ELEMENTOS NUEVOS: CARRITO DESPLEGABLE Y TOAST === -->
+    
+    <!-- Fondo oscuro al abrir el carrito -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Panel lateral del carrito -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <i class="ph ph-x close-cart" id="closeCartBtn"></i>
+        </div>
+        
+        <div class="cart-body" id="cartItemsContainer">
+            <!-- Los items del carrito se renderizan aquí dinámicamente -->
+            <p class="empty-cart-msg">Tu carrito está vacío.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cartTotal">S/ 0.00</span>
+            </div>
+            <button class="btn btn-primary checkout-btn" id="checkoutBtn">Ir a Pagar</button>
+        </div>
+    </div>
+
+    <!-- Mensaje Pop-up (Toast) de producto añadido -->
+    <div class="toast-notification" id="toastNotification">
+        <i class="ph ph-check-circle" style="font-size: 1.2rem;"></i>
+        <span>Producto añadido al carrito</span>
+    </div>
 
     <!-- Lógica de Interacción (JavaScript) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Lógica del Menú Hamburguesa ---
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
             const navItems = document.querySelectorAll('.nav-item');
 
-            // 1. Interacción del Menú Hamburguesa (Fluido y Suave)
             hamburger.addEventListener('click', () => {
-                // Alterna la clase 'active' que transforma el icono en 'X' y muestra el menú
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 
-                // Evitar el scroll en el body cuando el menú móvil está abierto
                 if(navLinks.classList.contains('active')){
                     document.body.style.overflow = 'hidden';
                 } else {
@@ -936,7 +1398,6 @@
                 }
             });
 
-            // 2. Cerrar menú móvil al hacer clic en un enlace
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     hamburger.classList.remove('active');
@@ -945,21 +1406,243 @@
                 });
             });
 
-            // Animación CSS para transformar la hamburguesa en una "X"
-            // Se inyecta dinámicamente o puede estar en el bloque style arriba.
             const style = document.createElement('style');
             style.innerHTML = `
-                .hamburger.active .bar:nth-child(1) {
-                    transform: translateY(8px) rotate(45deg);
-                }
-                .hamburger.active .bar:nth-child(2) {
-                    opacity: 0;
-                }
-                .hamburger.active .bar:nth-child(3) {
-                    transform: translateY(-8px) rotate(-45deg);
-                }
+                .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+                .hamburger.active .bar:nth-child(2) { opacity: 0; }
+                .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
             `;
             document.head.appendChild(style);
+            
+
+            // --- 2. Lógica del Carrito de Compras ---
+            
+            // Estado del carrito (Arreglo de objetos)
+            let cart = [];
+
+            // Elementos del DOM
+            const openCartBtn = document.getElementById('openCartBtn');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartTotalEl = document.getElementById('cartTotal');
+            const cartBadgeCount = document.getElementById('cartBadgeCount');
+            const toastNotification = document.getElementById('toastNotification');
+            let toastTimeout;
+
+            // Función para abrir el carrito
+            const openCart = () => {
+                cartSidebar.classList.add('active');
+                cartOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+            };
+
+            // Función para cerrar el carrito
+            const closeCart = () => {
+                cartSidebar.classList.remove('active');
+                cartOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Restaurar scroll
+            };
+
+            openCartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // Función para mostrar la notificación de "Añadido"
+            const showToast = () => {
+                toastNotification.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastNotification.classList.remove('show');
+                }, 3000); // Se oculta después de 3 segundos
+            };
+
+            // Función para renderizar y actualizar la UI del carrito
+            const updateCartUI = () => {
+                // Actualizar cantidad en la bolita roja
+                const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+                cartBadgeCount.textContent = totalItems;
+
+                // Actualizar Total Financiero
+                const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+                cartTotalEl.textContent = `S/ ${totalPrice.toFixed(2)}`;
+
+                // Limpiar contenedor y renderizar items
+                cartItemsContainer.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Tu carrito está vacío.</p>';
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.classList.add('cart-item');
+                    cartItemEl.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <p class="cart-item-price">S/ ${parseFloat(item.price).toFixed(2)}</p>
+                            <div class="cart-qty-controls">
+                                <button class="cart-qty-btn minus-btn" data-index="${index}">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="cart-qty-btn plus-btn" data-index="${index}">+</button>
+                            </div>
+                        </div>
+                        <i class="ph ph-trash cart-item-remove" data-index="${index}"></i>
+                    `;
+                    cartItemsContainer.appendChild(cartItemEl);
+                });
+
+                // Re-asignar eventos a los nuevos botones dentro del carrito
+                assignCartItemEvents();
+            };
+
+            // Función que maneja eventos dentro del HTML del carrito (aumentar, disminuir, eliminar)
+            const assignCartItemEvents = () => {
+                // Botones '+'
+                document.querySelectorAll('.plus-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        cart[index].quantity += 1;
+                        updateCartUI();
+                    });
+                });
+
+                // Botones '-'
+                document.querySelectorAll('.minus-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity -= 1;
+                        } else {
+                            cart.splice(index, 1); // Si llega a 0, lo elimina
+                        }
+                        updateCartUI();
+                    });
+                });
+
+                // Botón Eliminar (basurero)
+                document.querySelectorAll('.cart-item-remove').forEach(icon => {
+                    icon.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        cart.splice(index, 1);
+                        updateCartUI();
+                    });
+                });
+            };
+
+            // Capturar clics de "Añadir al Carrito" en los productos
+            const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+            
+            addToCartBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Prevenir comportamiento default
+                    e.preventDefault();
+
+                    // Extraer data attributes
+                    const productData = {
+                        id: btn.dataset.id,
+                        name: btn.dataset.name,
+                        price: parseFloat(btn.dataset.price),
+                        img: btn.dataset.img,
+                        quantity: 1
+                    };
+
+                    // Buscar si el producto ya está en el carrito
+                    const existingItemIndex = cart.findIndex(item => item.id === productData.id);
+
+                    if (existingItemIndex > -1) {
+                        // Si ya existe, solo suma 1
+                        cart[existingItemIndex].quantity += 1;
+                    } else {
+                        // Si no existe, lo agrega al arreglo
+                        cart.push(productData);
+                    }
+
+                    // Actualizar interfaz del carrito y mostrar el pop-up (toast)
+                    updateCartUI();
+                    showToast();
+                });
+            });
+
+            // Botón Checkout (Ir a pagar)
+            document.getElementById('checkoutBtn').addEventListener('click', () => {
+                if(cart.length === 0){
+                    alert("Tu carrito está vacío.");
+                    return;
+                }
+                
+                // Formatear mensaje para WhatsApp
+                let mensajeWa = "¡Hola Stay Bright! 👋%0A%0AQuisiera realizar un pedido con los siguientes productos:%0A%0A";
+                let total = 0;
+                
+                cart.forEach(item => {
+                    let subtotal = item.price * item.quantity;
+                    total += subtotal;
+                    mensajeWa += `• ${item.quantity}x ${item.name} - S/ ${subtotal.toFixed(2)}%0A`;
+                });
+                
+                mensajeWa += `%0A*Total: S/ ${total.toFixed(2)}*%0A%0A¿Cuáles son los pasos a seguir?`;
+                
+                // Redirigir a WhatsApp (usando tu número actual)
+                window.open(`https://wa.me/51954978785?text=${mensajeWa}`, '_blank');
+            });
+
+
+            // --- 3. LÓGICA DEL FORMULARIO DE CONTACTO GOOGLE SHEETS ---
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // URL del Google Apps Script configurado
+            const scriptURL = "https://script.google.com/macros/s/AKfycbxQLPIESMWP3QbfreG3BT1Ce8_oKRkIU7-voXHkBEB9za39uev4vPrOXTXArFfHlO1o/exec";
+
+            if(form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    successMessage.classList.add('hidden');
+                    errorMessage.classList.add('hidden');
+                    
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Enviando...';
+                    btnSpinner.classList.remove('hidden');
+
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch(scriptURL, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            successMessage.classList.remove('hidden');
+                            form.reset();
+                        } else {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                    } catch (error) {
+                        console.error('Error al enviar el formulario:', error);
+                        errorMessage.classList.remove('hidden');
+                    } finally {
+                        submitBtn.disabled = false;
+                        btnText.textContent = 'Enviar Mensaje';
+                        btnSpinner.classList.add('hidden');
+                        
+                        if(!successMessage.classList.contains('hidden')){
+                            setTimeout(() => {
+                                successMessage.classList.add('hidden');
+                            }, 5000);
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
